@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xbibz Obfuscator - Complete Documentation</title>
+    <meta name="description" content="Complete documentation for Xbibz Library Obfuscator - Advanced polymorphic obfuscation for JavaScript, JSON, and CSS">
+    <meta name="author" content="Xbibz Official">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --dark-color: #1a1a1a;
+            --light-color: #ecf0f1;
+            --sidebar-width: 300px;
+            --header-height: 70px;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--primary-color);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-header .version {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section-title {
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 2px;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .nav-links a.active {
+            background: rgba(52, 152, 219, 0.2);
+            border-left-color: var(--secondary-color);
+            color: white;
+        }
+
+        .nav-links i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            max-width: calc(100% - var(--sidebar-width));
+        }
+
+        .content-section {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .content-section:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f1f1f1;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: #1e1e1e;
+            border-radius: var(--border-radius);
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: #2d2d2d;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #3e3e3e;
+        }
+
+        .code-title {
+            color: #ccc;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn {
+            background: #404040;
+            border: none;
+            color: #ccc;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            background: #505050;
+            color: white;
+        }
+
+        .code-content {
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+
+        pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Table Styles */
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .api-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .api-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .api-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .api-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .param-name {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .param-type {
+            color: var(--accent-color);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+        }
+
+        .param-default {
+            color: var(--success-color);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Alert Boxes */
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            border-left-color: var(--secondary-color);
+            color: #1565c0;
+        }
+
+        .alert-warning {
+            background: #fff3e0;
+            border-left-color: var(--warning-color);
+            color: #e65100;
+        }
+
+        .alert-success {
+            background: #e8f5e8;
+            border-left-color: var(--success-color);
+            color: #2e7d32;
+        }
+
+        .alert-danger {
+            background: #ffebee;
+            border-left-color: var(--accent-color);
+            color: #c62828;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.3rem;
+        }
+
+        .badge-primary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .badge-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .badge-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .badge-danger {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* Installation Steps */
+        .install-steps {
+            counter-reset: step-counter;
+            margin: 2rem 0;
+        }
+
+        .install-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .install-step:hover {
+            background: #e9ecef;
+        }
+
+        .step-number {
+            background: var(--secondary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        /* Quick Nav */
+        .quick-nav {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: var(--secondary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.1);
+            background: #2980b9;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1100;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                max-width: 100%;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .content-section {
+                padding: 1.5rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .api-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        /* Syntax Highlighting Overrides */
+        .hljs {
+            background: #1e1e1e !important;
+            padding: 0 !important;
+        }
+
+        /* Search Box */
+        .search-box {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .search-box input::placeholder {
+            color: #bdc3c7;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h1>Xbibz Obfuscator</h1>
+            <div class="version">v1.0.0 Documentation</div>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search documentation...">
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Getting Started</div>
+                <ul class="nav-links">
+                    <li><a href="#introduction" class="nav-link active"><i class="fas fa-home"></i> Introduction</a></li>
+                    <li><a href="#installation" class="nav-link"><i class="fas fa-download"></i> Installation</a></li>
+                    <li><a href="#quick-start" class="nav-link"><i class="fas fa-rocket"></i> Quick Start</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Core Features</div>
+                <ul class="nav-links">
+                    <li><a href="#javascript-obfuscation" class="nav-link"><i class="fab fa-js-square"></i> JavaScript Obfuscation</a></li>
+                    <li><a href="#json-obfuscation" class="nav-link"><i class="fas fa-code"></i> JSON Obfuscation</a></li>
+                    <li><a href="#css-obfuscation" class="nav-link"><i class="fab fa-css3-alt"></i> CSS Obfuscation</a></li>
+                    <li><a href="#polymorphic-engine" class="nav-link"><i class="fas fa-dna"></i> Polymorphic Engine</a></li>
+                    <li><a href="#encryption" class="nav-link"><i class="fas fa-lock"></i> Advanced Encryption</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">API Reference</div>
+                <ul class="nav-links">
+                    <li><a href="#api-configuration" class="nav-link"><i class="fas fa-cog"></i> Configuration</a></li>
+                    <li><a href="#api-methods" class="nav-link"><i class="fas fa-code"></i> Methods</a></li>
+                    <li><a href="#api-options" class="nav-link"><i class="fas fa-sliders-h"></i> Options</a></li>
+                    <li><a href="#api-events" class="nav-link"><i class="fas fa-bell"></i> Events & Callbacks</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Advanced Topics</div>
+                <ul class="nav-links">
+                    <li><a href="#performance" class="nav-link"><i class="fas fa-tachometer-alt"></i> Performance</a></li>
+                    <li><a href="#security" class="nav-link"><i class="fas fa-shield-alt"></i> Security</a></li>
+                    <li><a href="#browser-support" class="nav-link"><i class="fas fa-globe"></i> Browser Support</a></li>
+                    <li><a href="#troubleshooting" class="nav-link"><i class="fas fa-wrench"></i> Troubleshooting</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Examples</div>
+                <ul class="nav-links">
+                    <li><a href="#basic-usage" class="nav-link"><i class="fas fa-play-circle"></i> Basic Usage</a></li>
+                    <li><a href="#advanced-examples" class="nav-link"><i class="fas fa-cogs"></i> Advanced Examples</a></li>
+                    <li><a href="#real-world" class="nav-link"><i class="fas fa-laptop-code"></i> Real World Usage</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Resources</div>
+                <ul class="nav-links">
+                    <li><a href="#faq" class="nav-link"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="#changelog" class="nav-link"><i class="fas fa-history"></i> Changelog</a></li>
+                    <li><a href="#support" class="nav-link"><i class="fas fa-life-ring"></i> Support</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Introduction Section -->
+        <section id="introduction" class="content-section">
+            <div class="section-header">
+                <h2>Introduction</h2>
+                <p>Welcome to Xbibz Obfuscator - The most advanced polymorphic obfuscation library for JavaScript, JSON, and CSS</p>
+            </div>
+
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> Xbibz Obfuscator provides enterprise-grade code protection with multi-layer encryption and polymorphic transformations.
+            </div>
+
+            <h3>What is Code Obfuscation?</h3>
+            <p>Code obfuscation is the process of transforming code into a form that is difficult to understand and reverse-engineer, while maintaining its original functionality. This is essential for protecting intellectual property and preventing code theft.</p>
+
+            <h3>Key Features</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-dna"></i>
+                    </div>
+                    <h3>Polymorphic Engine</h3>
+                    <p>Generates unique obfuscated output every time, making reverse engineering extremely difficult.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Multi-Layer Encryption</h3>
+                    <p>Advanced AES-256 encryption with multiple layers of protection for maximum security.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Anti-Debug Protection</h3>
+                    <p>Built-in protection against debugging tools and reverse engineering attempts.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-browser"></i>
+                    </div>
+                    <h3>Browser Compatibility</h3>
+                    <p>Full support for all modern browsers with automatic polyfills for older browsers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>High Performance</h3>
+                    <p>Optimized algorithms ensure fast obfuscation without compromising security.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Multiple Formats</h3>
+                    <p>Support for JavaScript, JSON, and CSS obfuscation with format-specific optimizations.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Installation Section -->
+        <section id="installation" class="content-section">
+            <div class="section-header">
+                <h2>Installation</h2>
+                <p>Get started with Xbibz Obfuscator in your project</p>
+            </div>
+
+            <div class="install-steps">
+                <div class="install-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>CDN Installation (Recommended)</h4>
+                        <p>Include the library directly from CDN:</p>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <div class="code-title">HTML</div>
+                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            </div>
+                            <div class="code-content">
+                                <pre><code class="language-html">&lt;script src="https://cdn.jsdelivr.net/npm/@xbibzlibrary/obfuscator@1.0.0/dist/xbibz-obfuscator.min.js"&gt;&lt;/script&gt;</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="install-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>NPM Installation</h4>
+                        <p>Install via npm for use with build tools:</p>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <div class="code-title">Bash</div>
+                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            </div>
+                            <div class="code-content">
+                                <pre><code class="language-bash">npm install @xbibzlibrary/obfuscator</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="install-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Manual Download</h4>
+                        <p>Download and include the library manually:</p>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <div class="code-title">HTML</div>
+                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            </div>
+                            <div class="code-content">
+                                <pre><code class="language-html">&lt;script src="https://www.npmjs.com/package/@xbibzlibrary/obfuscator"&gt;&lt;/script&gt;</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i> Make sure to include the library before your application code.
+            </div>
+        </section>
+
+        <!-- Quick Start Section -->
+        <section id="quick-start" class="content-section">
+            <div class="section-header">
+                <h2>Quick Start</h2>
+                <p>Start obfuscating your code in minutes</p>
+            </div>
+
+            <h3>Basic Usage</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-title">JavaScript</div>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-javascript">// Initialize the obfuscator
+const obfuscator = XbibzObfuscator.create({
+    obfuscationLevel: 8,
+    enableEncryption: true,
+    enablePolymorphism: true
+});
+
+// Obfuscate JavaScript code
+const originalCode = `
+function helloWorld() {
+    console.log("Hello, World!");
+    return "Hello, World!";
+}
+`;
+
+const obfuscatedCode = obfuscator.obfuscateJavaScript(originalCode);
+console.log(obfuscatedCode);</code></pre>
+                </div>
+            </div>
+
+            <h3>Multiple Format Support</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-title">JavaScript</div>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-javascript">// Obfuscate JSON
+const jsonData = {
+    name: "John Doe",
+    age: 30,
+    email: "john@example.com"
+};
+
+const obfuscatedJSON = obfuscator.obfuscateJSON(JSON.stringify(jsonData));
+
+// Obfuscate CSS
+const cssCode = `
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+`;
+
+const obfuscatedCSS = obfuscator.obfuscateCSS(cssCode);</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- JavaScript Obfuscation Section -->
+        <section id="javascript-obfuscation" class="content-section">
+            <div class="section-header">
+                <h2>JavaScript Obfuscation</h2>
+                <p>Advanced protection for your JavaScript code</p>
+            </div>
+
+            <h3>Features</h3>
+            <ul>
+                <li><strong>Control Flow Obfuscation:</strong> Transforms linear code into complex control structures</li>
+                <li><strong>String Encryption:</strong> Encrypts all string literals with multiple algorithms</li>
+                <li><strong>Variable Mangling:</strong> Renames variables to meaningless identifiers</li>
+                <li><strong>Dead Code Injection:</strong> Adds irrelevant code to confuse reverse engineers</li>
+                <li><strong>Function Obfuscation:</strong> Wraps and transforms function declarations</li>
+                <li><strong>Anti-Debug Protection:</strong> Detects and prevents debugging attempts</li>
+            </ul>
+
+            <h3>Example</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-title">JavaScript - Before Obfuscation</div>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-javascript">function calculateTotal(price, quantity) {
+    const taxRate = 0.1;
+    const subtotal = price * quantity;
+    const tax = subtotal * taxRate;
+    const total = subtotal + tax;
+    return total;
+}
+
+const result = calculateTotal(25, 4);
+console.log("Total:", result);</code></pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-title">JavaScript - After Obfuscation</div>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-javascript">var _0x1a2b = function() {
+    var _0x3c4d = true;
+    return function(_0x5e6f, _0x7g8h) {
+        var _0x9i0j = _0x3c4d ? function() {
+            if (_0x7g8h) {
+                var _0x1k2l = _0x7g8h.apply(_0x5e6f, arguments);
+                _0x7g8h = null;
+                return _0x1k2l;
+            }
+        } : function() {};
+        _0x3c4d = false;
+        return _0x9i0j;
+    };
+}();
+// ... Highly obfuscated code continues ...</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- API Configuration Section -->
+        <section id="api-configuration" class="content-section">
+            <div class="section-header">
+                <h2>API Configuration</h2>
+                <p>Complete reference for configuration options</p>
+            </div>
+
+            <h3>Initialization Options</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="param-name">obfuscationLevel</span></td>
+                        <td><span class="param-type">number</span></td>
+                        <td><span class="param-default">8</span></td>
+                        <td>Obfuscation intensity from 1 (light) to 10 (maximum)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">enablePolymorphism</span></td>
+                        <td><span class="param-type">boolean</span></td>
+                        <td><span class="param-default">true</span></td>
+                        <td>Enable polymorphic code generation</td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">enableEncryption</span></td>
+                        <td><span class="param-type">boolean</span></td>
+                        <td><span class="param-default">true</span></td>
+                        <td>Enable AES encryption for strings and data</td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">enableCompression</span></td>
+                        <td><span class="param-type">boolean</span></td>
+                        <td><span class="param-default">false</span></td>
+                        <td>Enable code compression (increases obfuscation time)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">browserCompatibility</span></td>
+                        <td><span class="param-type">boolean</span></td>
+                        <td><span class="param-default">true</span></td>
+                        <td>Ensure compatibility with older browsers</td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">autoPolyfills</span></td>
+                        <td><span class="param-type">boolean</span></td>
+                        <td><span class="param-default">true</span></td>
+                        <td>Automatically inject required polyfills</td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">debugMode</span></td>
+                        <td><span class="param-type">boolean</span></td>
+                        <td><span class="param-default">false</span></td>
+                        <td>Enable debug logging and performance tracking</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Method-specific Options</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="param-name">controlFlow</span></td>
+                        <td><span class="param-type">boolean</span></td>
+                        <td><span class="param-default">true</span></td>
+                        <td>Obfuscate control flow structures</td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">strings</span></td>
+                        <td><span class="param-type">boolean</span></td>
+                        <td><span class="param-default">true</span></td>
+                        <td>Encrypt string literals</td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">variables</span></td>
+                        <td><span class="param-type">boolean</span></td>
+                        <td><span class="param-default">true</span></td>
+                        <td>Mangle variable names</td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">functions</span></td>
+                        <td><span class="param-type">boolean</span></td>
+                        <td><span class="param-default">true</span></td>
+                        <td>Obfuscate function declarations</td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">deadCode</span></td>
+                        <td><span class="param-type">boolean</span></td>
+                        <td><span class="param-default">true</span></td>
+                        <td>Inject dead code</td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">antiDebug</span></td>
+                        <td><span class="param-type">boolean</span></td>
+                        <td><span class="param-default">true</span></td>
+                        <td>Add anti-debug protection</td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">antiTamper</span></td>
+                        <td><span class="param-type">boolean</span></td>
+                        <td><span class="param-default">true</span></td>
+                        <td>Add anti-tamper protection</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- API Methods Section -->
+        <section id="api-methods" class="content-section">
+            <div class="section-header">
+                <h2>API Methods</h2>
+                <p>Complete method reference for Xbibz Obfuscator</p>
+            </div>
+
+            <h3>Core Methods</h3>
+            
+            <div class="method">
+                <h4><code>XbibzObfuscator.create(options)</code></h4>
+                <p>Creates a new instance of the obfuscator with the specified options.</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-title">JavaScript</div>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-javascript">const obfuscator = XbibzObfuscator.create({
+    obfuscationLevel: 8,
+    enableEncryption: true
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="method">
+                <h4><code>obfuscateJavaScript(code, options)</code></h4>
+                <p>Obfuscates JavaScript code with the specified options.</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-title">JavaScript</div>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-javascript">const result = obfuscator.obfuscateJavaScript(code, {
+    controlFlow: true,
+    strings: true,
+    antiDebug: true
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="method">
+                <h4><code>obfuscateJSON(jsonString, options)</code></h4>
+                <p>Obfuscates JSON data with structure transformation and encryption.</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-title">JavaScript</div>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-javascript">const obfuscatedJSON = obfuscator.obfuscateJSON(jsonString, {
+    encryption: true,
+    structureTransformation: true
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="method">
+                <h4><code>obfuscateCSS(cssCode, options)</code></h4>
+                <p>Obfuscates CSS code with class name mangling and property transformation.</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-title">JavaScript</div>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-javascript">const obfuscatedCSS = obfuscator.obfuscateCSS(cssCode, {
+    mangleClassNames: true,
+    encryptValues: true
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Utility Methods</h3>
+            
+            <div class="method">
+                <h4><code>updateConfiguration(newOptions)</code></h4>
+                <p>Updates the configuration of an existing obfuscator instance.</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-title">JavaScript</div>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-javascript">obfuscator.updateConfiguration({
+    obfuscationLevel: 10,
+    enableCompression: true
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="method">
+                <h4><code>getConfiguration()</code></h4>
+                <p>Returns the current configuration and statistics.</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-title">JavaScript</div>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-javascript">const config = obfuscator.getConfiguration();
+console.log(config.obfuscationLevel);
+console.log(config.browserInfo);</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="method">
+                <h4><code>createJavaScriptVariant(code, variantId)</code></h4>
+                <p>Creates a polymorphic variant of the code with the specified ID.</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-title">JavaScript</div>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-javascript">const variant = obfuscator.createJavaScriptVariant(code, 123);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="content-section">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Common questions and answers about Xbibz Obfuscator</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Is the obfuscated code reversible?</h3>
+                <p>While no obfuscation is 100% irreversible, Xbibz Obfuscator uses multiple layers of encryption and polymorphic techniques that make reverse engineering extremely difficult and time-consuming. The level of protection can be configured based on your security requirements.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Does obfuscation affect code performance?</h3>
+                <p>There is a minimal performance impact due to the additional layers of abstraction and decryption routines. However, the impact is generally negligible for most applications. You can adjust the obfuscation level to balance between security and performance.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can I obfuscate Node.js code?</h3>
+                <p>Yes! Xbibz Obfuscator works in both browser and Node.js environments. For Node.js, install via npm and import the library as a module.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How do I handle errors during obfuscation?</h3>
+                <p>All methods include comprehensive error handling. Wrap your obfuscation calls in try-catch blocks to handle any potential errors gracefully.</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-title">JavaScript</div>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-javascript">try {
+    const result = obfuscator.obfuscateJavaScript(code);
+} catch (error) {
+    console.error('Obfuscation failed:', error.message);
+    // Handle error appropriately
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <h3>Is there a size limit for code obfuscation?</h3>
+                <p>There's no hardcoded limit, but very large files may take longer to process and consume more memory. For optimal performance, we recommend processing files under 1MB individually.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can I use custom encryption keys?</h3>
+                <p>Yes, you can provide custom encryption keys for additional security. Use the encryptionKey option during initialization or method calls.</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-title">JavaScript</div>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-javascript">const obfuscator = XbibzObfuscator.create({
+    encryptionKey: 'my-custom-secret-key-12345'
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Section -->
+        <section id="support" class="content-section">
+            <div class="section-header">
+                <h2>Support</h2>
+                <p>Get help and support for Xbibz Obfuscator</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <h3>Report Issues</h3>
+                    <p>Found a bug or have a feature request? Open an issue on our GitHub repository with detailed information about the problem.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Documentation</h3>
+                    <p>Check the complete documentation for detailed API references, examples, and best practices.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Community</h3>
+                    <p>Join our community forum to discuss with other developers, share experiences, and get help.</p>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <i class="fas fa-life-ring"></i> For enterprise support and custom implementations, please contact our support team directly.
+            </div>
+        </section>
+    </main>
+
+    <!-- Quick Navigation -->
+    <div class="quick-nav">
+        <a href="#introduction" class="nav-btn">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+
+    <script>
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    // Update active link
+                    document.querySelectorAll('.nav-link').forEach(navLink => {
+                        navLink.classList.remove('active');
+                    });
+                    link.classList.add('active');
+                    
+                    // Scroll to section
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (window.innerWidth <= 1024) {
+                        sidebar.classList.remove('active');
+                    }
+                }
+            });
+        });
+
+        // Copy code functionality
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const codeContent = codeBlock.querySelector('.code-content');
+            const codeText = codeContent.textContent;
+            
+            navigator.clipboard.writeText(codeText).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.style.background = '#27ae60';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy code: ', err);
+                button.textContent = 'Failed!';
+                button.style.background = '#e74c3c';
+                
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.style.background = '';
+                }, 2000);
+            });
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            if (searchTerm.length < 2) {
+                // Show all sections if search term is too short
+                document.querySelectorAll('.nav-section').forEach(section => {
+                    section.style.display = 'block';
+                });
+                return;
+            }
+            
+            document.querySelectorAll('.nav-section').forEach(section => {
+                const links = section.querySelectorAll('.nav-link');
+                let hasMatch = false;
+                
+                links.forEach(link => {
+                    const text = link.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        hasMatch = true;
+                        link.style.display = 'flex';
+                    } else {
+                        link.style.display = 'none';
+                    }
+                });
+                
+                section.style.display = hasMatch ? 'block' : 'none';
+            });
+        });
+
+        // Update active link on scroll
+        const sections = document.querySelectorAll('.content-section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // Handle escape key to close mobile menu
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                sidebar.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

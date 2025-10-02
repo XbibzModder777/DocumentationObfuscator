@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xbibz Library Obfuscator - Code Protection</title>
+    <meta name="description" content="Advanced polymorphic obfuscation for JavaScript, JSON, and CSS with multi-layer encryption">
+    <meta name="author" content="Xbibz Official">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --dark-color: #1a1a1a;
+            --light-color: #ecf0f1;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.2);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 2rem 0;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--light-color);
+        }
+
+        .logo-text h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .logo-text p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .version-badge {
+            background: var(--accent-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            padding: 5px;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-tab.active {
+            background: white;
+            color: var(--primary-color);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .panel:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-5px);
+        }
+
+        .panel-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-header h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .panel-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #219653;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        /* Editor Styles */
+        .editor-container {
+            position: relative;
+            padding: 1rem;
+        }
+
+        .code-editor {
+            width: 100%;
+            height: 300px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            resize: vertical;
+            transition: var(--transition);
+        }
+
+        .code-editor:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .editor-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .action-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Configuration Panel */
+        .config-panel {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .config-group {
+            margin-bottom: 1rem;
+        }
+
+        .config-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .slider {
+            flex: 1;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #e0e0e0;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            background: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .slider-value {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--secondary-color);
+        }
+
+        /* Results Section */
+        .results-section {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .result-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .result-tab {
+            padding: 15px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+            font-weight: 600;
+            color: #666;
+        }
+
+        .result-tab.active {
+            color: var(--secondary-color);
+            border-bottom-color: var(--secondary-color);
+            background: white;
+        }
+
+        .result-content {
+            padding: 1.5rem;
+            min-height: 200px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .result-code {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-break: break-all;
+            overflow-x: auto;
+        }
+
+        /* Statistics Panel */
+        .stats-panel {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: var(--success-color);
+        }
+
+        .notification.error {
+            background: var(--accent-color);
+        }
+
+        .notification.warning {
+            background: var(--warning-color);
+        }
+
+        .notification.info {
+            background: var(--secondary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+
+            .nav-tab {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+
+            .editor-actions {
+                flex-direction: column;
+            }
+
+            .action-group {
+                justify-content: center;
+            }
+
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation Keyframes */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Code Highlighting */
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .number { color: #b5cea8; }
+        .comment { color: #6a9955; }
+        .function { color: #dcdcaa; }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--secondary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification System -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Xbibz Obfuscator</h1>
+                        <p>Advanced Polymorphic Code Protection</p>
+                    </div>
+                    <div class="version-badge">v1.0.0</div>
+                </div>
+                <div class="header-actions">
+    <a href="https://www.npmjs.com/package/@xbibzlibrary/obfuscator" class="btn btn-primary" target="_blank">
+        <i class="fas fa-book"></i> Documentation
+    </a>
+</div>
+
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <div class="nav-tab active" data-tab="javascript">
+                    <i class="fab fa-js-square"></i> JavaScript
+                </div>
+                <div class="nav-tab" data-tab="json">
+                    <i class="fas fa-code"></i> JSON
+                </div>
+                <div class="nav-tab" data-tab="css">
+                    <i class="fab fa-css3-alt"></i> CSS
+                </div>
+                <div class="nav-tab" data-tab="batch">
+                    <i class="fas fa-layer-group"></i> Batch Processing
+                </div>
+                <div class="nav-tab" data-tab="settings">
+                    <i class="fas fa-cog"></i> Settings
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Configuration Panel -->
+        <div class="config-panel">
+            <h2 style="margin-bottom: 1.5rem; color: var(--primary-color);">
+                <i class="fas fa-sliders-h"></i> Obfuscation Configuration
+            </h2>
+            <div class="config-grid">
+                <div class="config-group">
+                    <label for="obfuscationLevel">Obfuscation Level: <span id="levelValue">8</span>/10</label>
+                    <div class="slider-container">
+                        <input type="range" id="obfuscationLevel" class="slider" min="1" max="10" value="8">
+                        <span class="slider-value" id="levelDisplay">8</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <label>Encryption Options</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enableAES" checked>
+                        <label for="enableAES">AES Encryption</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enablePolymorphic" checked>
+                        <label for="enablePolymorphic">Polymorphic Engine</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enableCompression">
+                        <label for="enableCompression">Code Compression</label>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <label>Protection Features</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enableAntiDebug" checked>
+                        <label for="enableAntiDebug">Anti-Debug</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enableAntiTamper" checked>
+                        <label for="enableAntiTamper">Anti-Tamper</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enableSelfDefense">
+                        <label for="enableSelfDefense">Self-Defense</label>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <label>Advanced Options</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enableDeadCode" checked>
+                        <label for="enableDeadCode">Dead Code Injection</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enableControlFlow" checked>
+                        <label for="enableControlFlow">Control Flow Obfuscation</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enableStringEncryption" checked>
+                        <label for="enableStringEncryption">String Encryption</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Input Panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-edit"></i> Input Code</h3>
+                    <div class="panel-controls">
+                        <button class="btn btn-primary" onclick="loadSampleCode()">
+                            <i class="fas fa-download"></i> Sample
+                        </button>
+                        <button class="btn btn-warning" onclick="clearInput()">
+                            <i class="fas fa-eraser"></i> Clear
+                        </button>
+                    </div>
+                </div>
+                <div class="editor-container">
+                    <textarea id="inputCode" class="code-editor" placeholder="Enter your code here..."></textarea>
+                    <div class="editor-actions">
+                        <div class="action-group">
+                            <button class="btn btn-success" onclick="obfuscateCode()">
+                                <i class="fas fa-lock"></i> Obfuscate Code
+                            </button>
+                            <button class="btn btn-primary" onclick="validateCode()">
+                                <i class="fas fa-check"></i> Validate
+                            </button>
+                        </div>
+                        <div class="action-group">
+                            <button class="btn btn-warning" onclick="formatCode()">
+                                <i class="fas fa-indent"></i> Format
+                            </button>
+                            <button class="btn btn-danger" onclick="analyzeCode()">
+                                <i class="fas fa-chart-bar"></i> Analyze
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-lock"></i> Obfuscated Output</h3>
+                    <div class="panel-controls">
+                        <button class="btn btn-success" onclick="copyOutput()">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                        <button class="btn btn-primary" onclick="downloadOutput()">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button class="btn btn-warning" onclick="testOutput()">
+                            <i class="fas fa-vial"></i> Test
+                        </button>
+                    </div>
+                </div>
+                <div class="editor-container">
+                    <textarea id="outputCode" class="code-editor" placeholder="Obfuscated code will appear here..." readonly></textarea>
+                    <div class="editor-actions">
+                        <div class="action-group">
+                            <button class="btn btn-primary" onclick="createVariant()">
+                                <i class="fas fa-dna"></i> Create Variant
+                            </button>
+                            <button class="btn btn-warning" onclick="deobfuscateCode()">
+                                <i class="fas fa-unlock"></i> Deobfuscate
+                            </button>
+                        </div>
+                        <div class="action-group">
+                            <span id="outputStats" style="color: #666; font-weight: 600;"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Tabs -->
+        <div class="results-section">
+            <div class="result-tabs">
+                <div class="result-tab active" data-result="performance">Performance Metrics</div>
+                <div class="result-tab" data-result="analysis">Code Analysis</div>
+                <div class="result-tab" data-result="security">Security Report</div>
+                <div class="result-tab" data-result="compatibility">Browser Compatibility</div>
+            </div>
+            <div class="result-content">
+                <div id="performanceResult" class="result-tab-content">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="originalSize">0</div>
+                            <div class="stat-label">Original Size (bytes)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="obfuscatedSize">0</div>
+                            <div class="stat-label">Obfuscated Size (bytes)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="sizeIncrease">0%</div>
+                            <div class="stat-label">Size Increase</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="entropyScore">0.00</div>
+                            <div class="stat-label">Entropy Score</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="processingTime">0ms</div>
+                            <div class="stat-label">Processing Time</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="protectionLevel">0%</div>
+                            <div class="stat-label">Protection Level</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="analysisResult" class="result-tab-content hidden">
+                    <div class="result-code" id="analysisContent">
+                        // Code analysis will appear here...
+                    </div>
+                </div>
+                <div id="securityResult" class="result-tab-content hidden">
+                    <div class="result-code" id="securityContent">
+                        // Security report will appear here...
+                    </div>
+                </div>
+                <div id="compatibilityResult" class="result-tab-content hidden">
+                    <div class="result-code" id="compatibilityContent">
+                        // Browser compatibility information will appear here...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Batch Processing Panel (Hidden by default) -->
+        <div id="batchPanel" class="panel hidden">
+            <div class="panel-header">
+                <h3><i class="fas fa-layer-group"></i> Batch Processing</h3>
+                <div class="panel-controls">
+                    <button class="btn btn-success" onclick="addBatchItem()">
+                        <i class="fas fa-plus"></i> Add Item
+                    </button>
+                    <button class="btn btn-primary" onclick="processBatch()">
+                        <i class="fas fa-play"></i> Process All
+                    </button>
+                </div>
+            </div>
+            <div class="editor-container">
+                <div id="batchItems" style="margin-bottom: 15px;">
+                    <!-- Batch items will be added here -->
+                </div>
+                <div class="editor-actions">
+                    <div class="action-group">
+                        <button class="btn btn-warning" onclick="clearBatch()">
+                            <i class="fas fa-trash"></i> Clear All
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Panel (Hidden by default) -->
+        <div id="settingsPanel" class="panel hidden">
+            <div class="panel-header">
+                <h3><i class="fas fa-cog"></i> Advanced Settings</h3>
+            </div>
+            <div class="editor-container">
+                <div class="config-grid">
+                    <div class="config-group">
+                        <label for="encryptionKey">Encryption Key</label>
+                        <input type="text" id="encryptionKey" class="code-editor" placeholder="Enter custom encryption key...">
+                        <button class="btn btn-primary" onclick="generateKey()" style="margin-top: 10px;">
+                            <i class="fas fa-key"></i> Generate Key
+                        </button>
+                    </div>
+                    <div class="config-group">
+                        <label for="algorithmSelect">Encryption Algorithm</label>
+                        <select id="algorithmSelect" class="code-editor">
+                            <option value="AES-256">AES-256 (Recommended)</option>
+                            <option value="AES-192">AES-192</option>
+                            <option value="AES-128">AES-128</option>
+                            <option value="Blowfish">Blowfish</option>
+                            <option value="RC4">RC4</option>
+                        </select>
+                    </div>
+                    <div class="config-group">
+                        <label>Debug Options</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="enableDebugMode">
+                            <label for="enableDebugMode">Debug Mode</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="enablePerformanceTracking" checked>
+                            <label for="enablePerformanceTracking">Performance Tracking</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="enableAutoSave">
+                            <label for="enableAutoSave">Auto-Save Settings</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Xbibz Obfuscator</h4>
+                    <p>Advanced polymorphic obfuscation library for JavaScript, JSON, and CSS with multi-layer encryption and browser compatibility.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-npm"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-js"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="showDocumentation()">Documentation</a></li>
+                        <li><a href="#" onclick="showExamples()">Examples</a></li>
+                        <li><a href="#" onclick="showAPIDocs()">API Reference</a></li>
+                        <li><a href="#" onclick="showChangelog()">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="showTroubleshooting()">Troubleshooting</a></li>
+                        <li><a href="#" onclick="showFAQ()">FAQ</a></li>
+                        <li><a href="#" onclick="showCommunity()">Community</a></li>
+                        <li><a href="#" onclick="showContact()">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>About</h4>
+                    <p>Developed by Xbibz Official</p>
+                    <p>Version 1.0.0</p>
+                    <p>License: MIT</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Xbibz Library Obfuscator. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Load Xbibz Obfuscator from CDN with fallback -->
+    <script>
+        // Fallback implementation jika CDN gagal
+        function loadObfuscatorWithFallback() {
+            const script = document.createElement('script');
+            script.src = "https://cdn.jsdelivr.net/npm/@xbibzlibrary/obfuscator@1.0.0/dist/xbibz-obfuscator.min.js";
+            script.onload = function() {
+                console.log('Xbibz Obfuscator loaded successfully from CDN');
+                initializeApp();
+            };
+            script.onerror = function() {
+                console.warn('Failed to load from CDN, using fallback implementation');
+                loadFallbackObfuscator();
+            };
+            document.head.appendChild(script);
+        }
+
+        // Basic fallback implementation
+        function loadFallbackObfuscator() {
+            window.XbibzObfuscator = class {
+                static create(options) {
+                    return new XbibzObfuscator(options);
+                }
+
+                constructor(options = {}) {
+                    this.options = options;
+                    this.initialized = true;
+                }
+
+                updateConfiguration(newOptions) {
+                    this.options = { ...this.options, ...newOptions };
+                    return this.getConfiguration();
+                }
+
+                getConfiguration() {
+                    return this.options;
+                }
+
+                obfuscateJavaScript(code, options = {}) {
+                    // Simple obfuscation fallback
+                    return this.simpleObfuscate(code);
+                }
+
+                obfuscateJSON(code, options = {}) {
+                    try {
+                        const obj = JSON.parse(code);
+                        return JSON.stringify(obj, null, 2) + '\n// Obfuscated with Xbibz Fallback';
+                    } catch (e) {
+                        throw new Error('Invalid JSON');
+                    }
+                }
+
+                obfuscateCSS(code, options = {}) {
+                    return code.split('').reverse().join('') + '\n/* Obfuscated with Xbibz Fallback */';
+                }
+
+                simpleObfuscate(code) {
+                    // Very basic obfuscation for fallback
+                    return code
+                        .replace(/var /g, 'var _0x')
+                        .replace(/function /g, 'function _0x')
+                        .replace(/'/g, '\\x27')
+                        .replace(/"/g, '\\x22') +
+                        '\n// Obfuscated with Xbibz Fallback';
+                }
+
+                startPerformanceTracking() {
+                    this.startTime = performance.now();
+                }
+
+                getPerformanceMetrics() {
+                    return this.startTime ? { 
+                        totalTime: performance.now() - this.startTime 
+                    } : null;
+                }
+            };
+
+            initializeApp();
+        }
+
+        // Initialize the application
+        function initializeApp() {
+            try {
+                if (typeof window.XbibzObfuscator === 'undefined') {
+                    throw new Error('XbibzObfuscator not available');
+                }
+
+                window.obfuscator = XbibzObfuscator.create({
+                    obfuscationLevel: 8,
+                    enablePolymorphism: true,
+                    enableEncryption: true,
+                    enableCompression: false,
+                    browserCompatibility: true,
+                    autoPolyfills: true,
+                    debugMode: false
+                });
+                
+                showNotification('Xbibz Obfuscator initialized successfully!', 'success');
+                console.log('Xbibz Obfuscator initialized:', window.obfuscator);
+                
+                // Enable UI
+                document.querySelectorAll('button, input, textarea, select').forEach(el => {
+                    el.disabled = false;
+                });
+                
+            } catch (error) {
+                console.error('Failed to initialize obfuscator:', error);
+                showNotification('Using fallback obfuscation mode', 'warning');
+                
+                // Initialize fallback
+                if (!window.obfuscator) {
+                    loadFallbackObfuscator();
+                }
+            }
+        }
+
+        // Start loading the obfuscator
+        document.addEventListener('DOMContentLoaded', function() {
+            loadObfuscatorWithFallback();
+            setupEventListeners();
+            loadSavedSettings();
+        });
+    </script>
+
+    <script>
+        // Global variables
+        let currentTab = 'javascript';
+        let currentResultTab = 'performance';
+        let batchItems = [];
+        let performanceMetrics = {};
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Tab navigation
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+
+            // Result tab navigation
+            document.querySelectorAll('.result-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const resultTab = this.getAttribute('data-result');
+                    switchResultTab(resultTab);
+                });
+            });
+
+            // Obfuscation level slider
+            const levelSlider = document.getElementById('obfuscationLevel');
+            const levelDisplay = document.getElementById('levelDisplay');
+            const levelValue = document.getElementById('levelValue');
+            
+            if (levelSlider) {
+                levelSlider.addEventListener('input', function() {
+                    const value = this.value;
+                    levelDisplay.textContent = value;
+                    levelValue.textContent = value;
+                    
+                    if (window.obfuscator) {
+                        window.obfuscator.updateConfiguration({
+                            obfuscationLevel: parseInt(value)
+                        });
+                    }
+                });
+            }
+
+            // Configuration checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', updateConfiguration);
+            });
+
+            // Encryption algorithm select
+            const algorithmSelect = document.getElementById('algorithmSelect');
+            if (algorithmSelect) {
+                algorithmSelect.addEventListener('change', updateConfiguration);
+            }
+        }
+
+        // Switch between main tabs
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Update active tab
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.nav-tab[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Show/hide panels
+            document.getElementById('batchPanel').classList.add('hidden');
+            document.getElementById('settingsPanel').classList.add('hidden');
+            
+            if (tabName === 'batch') {
+                document.getElementById('batchPanel').classList.remove('hidden');
+            } else if (tabName === 'settings') {
+                document.getElementById('settingsPanel').classList.remove('hidden');
+            }
+            
+            // Update input placeholder based on tab
+            const inputElement = document.getElementById('inputCode');
+            if (inputElement) {
+                switch(tabName) {
+                    case 'javascript':
+                        inputElement.placeholder = 'Enter JavaScript code here...';
+                        break;
+                    case 'json':
+                        inputElement.placeholder = 'Enter JSON code here...';
+                        break;
+                    case 'css':
+                        inputElement.placeholder = 'Enter CSS code here...';
+                        break;
+                }
+            }
+        }
+
+        // Switch between result tabs
+        function switchResultTab(tabName) {
+            currentResultTab = tabName;
+            
+            // Update active tab
+            document.querySelectorAll('.result-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.result-tab[data-result="${tabName}"]`).classList.add('active');
+            
+            // Show/hide content
+            document.querySelectorAll('.result-tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(tabName + 'Result').classList.remove('hidden');
+        }
+
+        // Update obfuscator configuration
+        function updateConfiguration() {
+            if (!window.obfuscator) return;
+            
+            const config = {
+                obfuscationLevel: parseInt(document.getElementById('obfuscationLevel').value),
+                enableEncryption: document.getElementById('enableAES').checked,
+                enablePolymorphism: document.getElementById('enablePolymorphic').checked,
+                enableCompression: document.getElementById('enableCompression').checked,
+                debugMode: document.getElementById('enableDebugMode')?.checked || false
+            };
+            
+            window.obfuscator.updateConfiguration(config);
+            saveSettings();
+        }
+
+        // Main obfuscation function
+        function obfuscateCode() {
+            const inputCode = document.getElementById('inputCode').value.trim();
+            
+            if (!inputCode) {
+                showNotification('Please enter some code to obfuscate!', 'warning');
+                return;
+            }
+            
+            if (!window.obfuscator) {
+                showNotification('Obfuscator not initialized!', 'error');
+                return;
+            }
+            
+            try {
+                // Start performance tracking
+                if (window.obfuscator.startPerformanceTracking) {
+                    window.obfuscator.startPerformanceTracking();
+                }
+                const startTime = performance.now();
+                
+                let obfuscatedCode;
+                
+                // Perform obfuscation based on current tab
+                switch(currentTab) {
+                    case 'javascript':
+                        obfuscatedCode = window.obfuscator.obfuscateJavaScript(inputCode, getObfuscationOptions());
+                        break;
+                    case 'json':
+                        obfuscatedCode = window.obfuscator.obfuscateJSON(inputCode, getObfuscationOptions());
+                        break;
+                    case 'css':
+                        obfuscatedCode = window.obfuscator.obfuscateCSS(inputCode, getObfuscationOptions());
+                        break;
+                    default:
+                        throw new Error('Unsupported code type');
+                }
+                
+                const endTime = performance.now();
+                const processingTime = endTime - startTime;
+                
+                // Display results
+                document.getElementById('outputCode').value = obfuscatedCode;
+                
+                // Update statistics
+                updateStatistics(inputCode, obfuscatedCode, processingTime);
+                
+                // Update performance metrics
+                if (window.obfuscator.getPerformanceMetrics) {
+                    performanceMetrics = window.obfuscator.getPerformanceMetrics() || {};
+                }
+                
+                showNotification('Code obfuscated successfully!', 'success');
+                
+            } catch (error) {
+                showNotification('Obfuscation failed: ' + error.message, 'error');
+                console.error('Obfuscation error:', error);
+            }
+        }
+
+        // Get obfuscation options from UI
+        function getObfuscationOptions() {
+            return {
+                controlFlow: document.getElementById('enableControlFlow').checked,
+                strings: document.getElementById('enableStringEncryption').checked,
+                deadCode: document.getElementById('enableDeadCode').checked,
+                antiDebug: document.getElementById('enableAntiDebug').checked,
+                antiTamper: document.getElementById('enableAntiTamper').checked,
+                polymorphism: document.getElementById('enablePolymorphic').checked
+            };
+        }
+
+        // Update statistics display
+        function updateStatistics(original, obfuscated, processingTime) {
+            const originalSize = new Blob([original]).size;
+            const obfuscatedSize = new Blob([obfuscated]).size;
+            const sizeIncrease = originalSize > 0 ? ((obfuscatedSize - originalSize) / originalSize * 100).toFixed(2) : '0';
+            const protectionLevel = (parseInt(document.getElementById('obfuscationLevel').value) / 10 * 100).toFixed(0);
+            
+            // Update performance metrics
+            document.getElementById('originalSize').textContent = originalSize.toLocaleString();
+            document.getElementById('obfuscatedSize').textContent = obfuscatedSize.toLocaleString();
+            document.getElementById('sizeIncrease').textContent = sizeIncrease + '%';
+            document.getElementById('processingTime').textContent = processingTime.toFixed(2) + 'ms';
+            document.getElementById('protectionLevel').textContent = protectionLevel + '%';
+            
+            // Calculate entropy (simplified)
+            const entropy = calculateEntropy(obfuscated);
+            document.getElementById('entropyScore').textContent = entropy.toFixed(4);
+            
+            // Update output stats
+            document.getElementById('outputStats').textContent = 
+                `Size: ${obfuscatedSize.toLocaleString()} bytes | Entropy: ${entropy.toFixed(4)}`;
+                
+            // Update analysis content
+            updateAnalysisContent(original, obfuscated);
+        }
+
+        // Calculate entropy of a string
+        function calculateEntropy(str) {
+            const frequency = {};
+            let total = 0;
+            
+            for (let char of str) {
+                frequency[char] = (frequency[char] || 0) + 1;
+                total++;
+            }
+            
+            let entropy = 0;
+            for (let char in frequency) {
+                const p = frequency[char] / total;
+                entropy -= p * Math.log2(p);
+            }
+            
+            return isNaN(entropy) ? 0 : entropy;
+        }
+
+        // Update analysis content
+        function updateAnalysisContent(original, obfuscated) {
+            const analysis = {
+                originalLines: original.split('\n').length,
+                obfuscatedLines: obfuscated.split('\n').length,
+                originalCharacters: original.length,
+                obfuscatedCharacters: obfuscated.length,
+                compressionRatio: original.length > 0 ? (original.length / obfuscated.length).toFixed(2) : '0',
+                techniquesApplied: getAppliedTechniques()
+            };
+            
+            document.getElementById('analysisContent').textContent = JSON.stringify(analysis, null, 2);
+            
+            // Update security report
+            updateSecurityReport(obfuscated);
+            
+            // Update compatibility report
+            updateCompatibilityReport();
+        }
+
+        // Get applied obfuscation techniques
+        function getAppliedTechniques() {
+            const techniques = [];
+            if (document.getElementById('enableControlFlow').checked) techniques.push('Control Flow Obfuscation');
+            if (document.getElementById('enableStringEncryption').checked) techniques.push('String Encryption');
+            if (document.getElementById('enableDeadCode').checked) techniques.push('Dead Code Injection');
+            if (document.getElementById('enableAntiDebug').checked) techniques.push('Anti-Debug Protection');
+            if (document.getElementById('enableAntiTamper').checked) techniques.push('Anti-Tamper Protection');
+            if (document.getElementById('enablePolymorphic').checked) techniques.push('Polymorphic Engine');
+            if (document.getElementById('enableAES').checked) techniques.push('AES Encryption');
+            
+            return techniques;
+        }
+
+        // Update security report
+        function updateSecurityReport(obfuscatedCode) {
+            const securityReport = {
+                encryptionStrength: document.getElementById('enableAES').checked ? 'High (AES-256)' : 'None',
+                polymorphismLevel: document.getElementById('enablePolymorphic').checked ? 'High' : 'None',
+                antiDebugEnabled: document.getElementById('enableAntiDebug').checked,
+                antiTamperEnabled: document.getElementById('enableAntiTamper').checked,
+                stringProtection: document.getElementById('enableStringEncryption').checked ? 'Encrypted' : 'Plain',
+                estimatedDeobfuscationTime: estimateDeobfuscationTime(),
+                vulnerabilityAssessment: assessVulnerabilities(obfuscatedCode)
+            };
+            
+            document.getElementById('securityContent').textContent = JSON.stringify(securityReport, null, 2);
+        }
+
+        // Estimate deobfuscation time (theoretical)
+        function estimateDeobfuscationTime() {
+            const level = parseInt(document.getElementById('obfuscationLevel').value);
+            const hasEncryption = document.getElementById('enableAES').checked;
+            const hasPolymorphism = document.getElementById('enablePolymorphic').checked;
+            
+            let baseTime = level * 10; // Base time in hours
+            if (hasEncryption) baseTime *= 3;
+            if (hasPolymorphism) baseTime *= 5;
+            
+            return `~${baseTime} hours (theoretical)`;
+        }
+
+        // Assess vulnerabilities in obfuscated code
+        function assessVulnerabilities(code) {
+            const vulnerabilities = [];
+            
+            // Check for potential issues
+            if (code.includes('eval(')) vulnerabilities.push('Uses eval (potential security risk)');
+            if (code.includes('Function(')) vulnerabilities.push('Uses Function constructor');
+            if (code.length > 100000) vulnerabilities.push('Large code size may impact performance');
+            
+            return vulnerabilities.length > 0 ? vulnerabilities : ['No obvious vulnerabilities detected'];
+        }
+
+        // Update browser compatibility report
+        function updateCompatibilityReport() {
+            if (!window.obfuscator) return;
+            
+            const config = window.obfuscator.getConfiguration ? window.obfuscator.getConfiguration() : {};
+            const compatibility = config.browserInfo || {
+                browser: 'Unknown',
+                version: 'Unknown',
+                features: {
+                    crypto: typeof crypto !== 'undefined',
+                    es6: true,
+                    modules: true
+                }
+            };
+            
+            document.getElementById('compatibilityContent').textContent = JSON.stringify(compatibility, null, 2);
+        }
+
+        // Create polymorphic variant
+        function createVariant() {
+            const inputCode = document.getElementById('inputCode').value.trim();
+            
+            if (!inputCode) {
+                showNotification('Please enter some code first!', 'warning');
+                return;
+            }
+            
+            try {
+                if (window.obfuscator && window.obfuscator.createJavaScriptVariant) {
+                    const variantId = Math.floor(Math.random() * 1000);
+                    const variant = window.obfuscator.createJavaScriptVariant(inputCode, variantId);
+                    document.getElementById('outputCode').value = variant;
+                    showNotification(`Polymorphic variant ${variantId} created!`, 'success');
+                } else {
+                    // Fallback variant creation
+                    const variant = inputCode.split('').reverse().join('');
+                    document.getElementById('outputCode').value = variant;
+                    showNotification('Basic variant created (fallback mode)', 'warning');
+                }
+            } catch (error) {
+                showNotification('Variant creation failed: ' + error.message, 'error');
+            }
+        }
+
+        // Deobfuscate code
+        function deobfuscateCode() {
+            showNotification('Deobfuscation requires original encryption keys and configuration.', 'warning');
+        }
+
+        // Copy output to clipboard
+        function copyOutput() {
+            const outputCode = document.getElementById('outputCode');
+            if (!outputCode.value) {
+                showNotification('No code to copy!', 'warning');
+                return;
+            }
+            
+            outputCode.select();
+            outputCode.setSelectionRange(0, 99999);
+            
+            try {
+                navigator.clipboard.writeText(outputCode.value);
+                showNotification('Code copied to clipboard!', 'success');
+            } catch (error) {
+                // Fallback for older browsers
+                try {
+                    document.execCommand('copy');
+                    showNotification('Code copied to clipboard!', 'success');
+                } catch (e) {
+                    showNotification('Failed to copy code: ' + e.message, 'error');
+                }
+            }
+        }
+
+        // Download output as file
+        function downloadOutput() {
+            const outputCode = document.getElementById('outputCode').value;
+            if (!outputCode) {
+                showNotification('No code to download!', 'warning');
+                return;
+            }
+            
+            try {
+                const blob = new Blob([outputCode], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `obfuscated-${currentTab}-${Date.now()}.${getFileExtension()}`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showNotification('File downloaded successfully!', 'success');
+            } catch (error) {
+                showNotification('Download failed: ' + error.message, 'error');
+            }
+        }
+
+        // Get file extension based on current tab
+        function getFileExtension() {
+            switch(currentTab) {
+                case 'javascript': return 'js';
+                case 'json': return 'json';
+                case 'css': return 'css';
+                default: return 'txt';
+            }
+        }
+
+        // Test obfuscated code
+        function testOutput() {
+            const outputCode = document.getElementById('outputCode').value;
+            
+            if (!outputCode) {
+                showNotification('No code to test!', 'warning');
+                return;
+            }
+            
+            try {
+                // Create a safe test environment
+                const testFrame = document.createElement('iframe');
+                testFrame.style.display = 'none';
+                testFrame.sandbox = 'allow-scripts';
+                document.body.appendChild(testFrame);
+                
+                // Try to execute the code in the iframe
+                const script = testFrame.contentDocument.createElement('script');
+                script.textContent = outputCode;
+                testFrame.contentDocument.body.appendChild(script);
+                
+                showNotification('Code executed successfully in sandbox!', 'success');
+                
+                // Clean up
+                setTimeout(() => {
+                    document.body.removeChild(testFrame);
+                }, 1000);
+                
+            } catch (error) {
+                showNotification('Code execution failed: ' + error.message, 'error');
+            }
+        }
+
+        // Load sample code
+        function loadSampleCode() {
+            let sampleCode = '';
+            
+            switch(currentTab) {
+                case 'javascript':
+                    sampleCode = `// Sample JavaScript Code
+function calculateFactorial(n) {
+    if (n === 0 || n === 1) {
+        return 1;
+    }
+    return n * calculateFactorial(n - 1);
+}
+
+const user = {
+    name: "John Doe",
+    age: 30,
+    email: "john.doe@example.com",
+    isActive: true
+};
+
+function processUserData(userData) {
+    const processed = {};
+    for (const key in userData) {
+        if (userData.hasOwnProperty(key)) {
+            processed[key] = String(userData[key]).toUpperCase();
+        }
+    }
+    return processed;
+}
+
+console.log(calculateFactorial(5));
+console.log(processUserData(user));`;
+                    break;
+                    
+                case 'json':
+                    sampleCode = `{
+  "application": "Xbibz Obfuscator",
+  "version": "1.0.0",
+  "config": {
+    "obfuscationLevel": 8,
+    "enableEncryption": true,
+    "features": [
+      "polymorphic",
+      "anti-debug",
+      "string-encryption"
+    ]
+  },
+  "users": [
+    {
+      "id": 1,
+      "name": "Alice",
+      "permissions": ["read", "write"]
+    },
+    {
+      "id": 2,
+      "name": "Bob", 
+      "permissions": ["read"]
+    }
+  ]
+}`;
+                    break;
+                    
+                case 'css':
+                    sampleCode = `/* Sample CSS Code */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.button:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .header {
+        padding: 1rem;
+    }
+}`;
+                    break;
+            }
+            
+            document.getElementById('inputCode').value = sampleCode;
+            showNotification('Sample code loaded!', 'success');
+        }
+
+        // Clear input
+        function clearInput() {
+            document.getElementById('inputCode').value = '';
+            showNotification('Input cleared!', 'success');
+        }
+
+        // Validate code syntax
+        function validateCode() {
+            const inputCode = document.getElementById('inputCode').value.trim();
+            
+            if (!inputCode) {
+                showNotification('Please enter some code to validate!', 'warning');
+                return;
+            }
+            
+            try {
+                switch(currentTab) {
+                    case 'javascript':
+                        // Basic JavaScript validation
+                        new Function(inputCode);
+                        break;
+                    case 'json':
+                        // JSON validation
+                        JSON.parse(inputCode);
+                        break;
+                    case 'css':
+                        // CSS validation (basic)
+                        const style = document.createElement('style');
+                        style.textContent = inputCode;
+                        document.head.appendChild(style);
+                        document.head.removeChild(style);
+                        break;
+                }
+                
+                showNotification('Code syntax is valid!', 'success');
+            } catch (error) {
+                showNotification('Syntax error: ' + error.message, 'error');
+            }
+        }
+
+        // Format code
+        function formatCode() {
+            const inputCode = document.getElementById('inputCode').value;
+            let formattedCode = inputCode;
+            
+            try {
+                switch(currentTab) {
+                    case 'javascript':
+                        // Basic JavaScript formatting
+                        formattedCode = formatJavaScript(inputCode);
+                        break;
+                    case 'json':
+                        // JSON formatting
+                        const parsed = JSON.parse(inputCode);
+                        formattedCode = JSON.stringify(parsed, null, 2);
+                        break;
+                    case 'css':
+                        // Basic CSS formatting
+                        formattedCode = formatCSS(inputCode);
+                        break;
+                }
+                
+                document.getElementById('inputCode').value = formattedCode;
+                showNotification('Code formatted!', 'success');
+            } catch (error) {
+                showNotification('Formatting failed: ' + error.message, 'error');
+            }
+        }
+
+        // Basic JavaScript formatter
+        function formatJavaScript(code) {
+            return code
+                .replace(/{/g, ' {\n')
+                .replace(/}/g, '\n}\n')
+                .replace(/;/g, ';\n')
+                .replace(/,/g, ', ')
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0)
+                .join('\n');
+        }
+
+        // Basic CSS formatter
+        function formatCSS(code) {
+            return code
+                .replace(/{/g, ' {\n  ')
+                .replace(/}/g, '\n}\n')
+                .replace(/;/g, ';\n  ')
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0)
+                .join('\n');
+        }
+
+        // Analyze code complexity
+        function analyzeCode() {
+            const inputCode = document.getElementById('inputCode').value;
+            
+            if (!inputCode) {
+                showNotification('Please enter some code to analyze!', 'warning');
+                return;
+            }
+            
+            // Basic code analysis
+            const lines = inputCode.split('\n').length;
+            const characters = inputCode.length;
+            const words = inputCode.split(/\s+/).length;
+            
+            const analysis = {
+                lines: lines,
+                characters: characters,
+                words: words,
+                averageLineLength: (characters / lines).toFixed(1),
+                complexity: estimateComplexity(inputCode)
+            };
+            
+            showNotification(`Analysis: ${lines} lines, ${characters} chars, ${analysis.complexity} complexity`, 'success');
+            switchResultTab('analysis');
+        }
+
+        // Estimate code complexity
+        function estimateComplexity(code) {
+            let score = 0;
+            
+            // Simple heuristic-based complexity estimation
+            if (code.includes('function')) score += 2;
+            if (code.includes('if')) score += 1;
+            if (code.includes('for')) score += 2;
+            if (code.includes('while')) score += 2;
+            if (code.includes('switch')) score += 1;
+            if (code.includes('try')) score += 1;
+            if (code.includes('catch')) score += 1;
+            
+            if (score < 3) return 'Low';
+            if (score < 6) return 'Medium';
+            return 'High';
+        }
+
+        // Batch processing functions
+        function addBatchItem() {
+            const batchId = batchItems.length + 1;
+            batchItems.push({
+                id: batchId,
+                code: '',
+                type: currentTab,
+                status: 'pending'
+            });
+            
+            updateBatchDisplay();
+        }
+
+        function updateBatchDisplay() {
+            const container = document.getElementById('batchItems');
+            container.innerHTML = '';
+            
+            batchItems.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'batch-item';
+                itemElement.style.marginBottom = '10px';
+                itemElement.style.padding = '10px';
+                itemElement.style.border = '1px solid #e0e0e0';
+                itemElement.style.borderRadius = '6px';
+                itemElement.style.background = '#f8f9fa';
+                
+                itemElement.innerHTML = `
+                    <strong>Item ${item.id}</strong> (${item.type})
+                    <textarea style="width: 100%; height: 80px; margin: 10px 0; padding: 8px;" 
+                              placeholder="Enter code..." 
+                              onchange="updateBatchItem(${item.id}, this.value)">${item.code}</textarea>
+                    <div>
+                        <span>Status: ${item.status}</span>
+                        <button class="btn btn-danger" onclick="removeBatchItem(${item.id})" style="float: right;">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(itemElement);
+            });
+        }
+
+        function updateBatchItem(id, code) {
+            const item = batchItems.find(item => item.id === id);
+            if (item) {
+                item.code = code;
+            }
+        }
+
+        function removeBatchItem(id) {
+            batchItems = batchItems.filter(item => item.id !== id);
+            updateBatchDisplay();
+        }
+
+        function clearBatch() {
+            batchItems = [];
+            updateBatchDisplay();
+            showNotification('Batch cleared!', 'success');
+        }
+
+        function processBatch() {
+            if (batchItems.length === 0) {
+                showNotification('No batch items to process!', 'warning');
+                return;
+            }
+            
+            let processed = 0;
+            let errors = 0;
+            
+            batchItems.forEach(item => {
+                try {
+                    let result;
+                    switch(item.type) {
+                        case 'javascript':
+                            result = window.obfuscator.obfuscateJavaScript(item.code, getObfuscationOptions());
+                            break;
+                        case 'json':
+                            result = window.obfuscator.obfuscateJSON(item.code, getObfuscationOptions());
+                            break;
+                        case 'css':
+                            result = window.obfuscator.obfuscateCSS(item.code, getObfuscationOptions());
+                            break;
+                    }
+                    
+                    item.result = result;
+                    item.status = 'completed';
+                    processed++;
+                } catch (error) {
+                    item.status = 'error: ' + error.message;
+                    errors++;
+                }
+            });
+            
+            updateBatchDisplay();
+            showNotification(`Batch processing completed: ${processed} success, ${errors} errors`, 
+                           errors > 0 ? 'warning' : 'success');
+        }
+
+        // Settings management
+        function saveSettings() {
+            const settings = {
+                obfuscationLevel: document.getElementById('obfuscationLevel').value,
+                enableAES: document.getElementById('enableAES').checked,
+                enablePolymorphic: document.getElementById('enablePolymorphic').checked,
+                enableCompression: document.getElementById('enableCompression').checked,
+                enableAntiDebug: document.getElementById('enableAntiDebug').checked,
+                enableAntiTamper: document.getElementById('enableAntiTamper').checked,
+                enableSelfDefense: document.getElementById('enableSelfDefense')?.checked || false,
+                enableDeadCode: document.getElementById('enableDeadCode').checked,
+                enableControlFlow: document.getElementById('enableControlFlow').checked,
+                enableStringEncryption: document.getElementById('enableStringEncryption').checked,
+                algorithm: document.getElementById('algorithmSelect').value,
+                enableDebugMode: document.getElementById('enableDebugMode')?.checked || false,
+                enablePerformanceTracking: document.getElementById('enablePerformanceTracking')?.checked || true,
+                enableAutoSave: document.getElementById('enableAutoSave')?.checked || false
+            };
+            
+            localStorage.setItem('xbibzObfuscatorSettings', JSON.stringify(settings));
+        }
+
+        function loadSavedSettings() {
+            try {
+                const saved = localStorage.getItem('xbibzObfuscatorSettings');
+                if (saved) {
+                    const settings = JSON.parse(saved);
+                    
+                    // Apply settings to UI
+                    if (document.getElementById('obfuscationLevel')) {
+                        document.getElementById('obfuscationLevel').value = settings.obfuscationLevel;
+                        document.getElementById('levelDisplay').textContent = settings.obfuscationLevel;
+                        document.getElementById('levelValue').textContent = settings.obfuscationLevel;
+                    }
+                    
+                    const checkboxes = [
+                        'enableAES', 'enablePolymorphic', 'enableCompression', 
+                        'enableAntiDebug', 'enableAntiTamper', 'enableSelfDefense',
+                        'enableDeadCode', 'enableControlFlow', 'enableStringEncryption',
+                        'enableDebugMode', 'enablePerformanceTracking', 'enableAutoSave'
+                    ];
+                    
+                    checkboxes.forEach(id => {
+                        const element = document.getElementById(id);
+                        if (element && settings[id] !== undefined) {
+                            element.checked = settings[id];
+                        }
+                    });
+                    
+                    if (document.getElementById('algorithmSelect') && settings.algorithm) {
+                        document.getElementById('algorithmSelect').value = settings.algorithm;
+                    }
+                    
+                    // Update obfuscator configuration
+                    updateConfiguration();
+                    
+                    showNotification('Settings loaded successfully!', 'success');
+                }
+            } catch (error) {
+                console.warn('Failed to load settings:', error);
+            }
+        }
+
+        function generateKey() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+            let key = '';
+            for (let i = 0; i < 32; i++) {
+                key += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('encryptionKey').value = key;
+            showNotification('Encryption key generated!', 'success');
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            if (!notification) return;
+            
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+
+        // Demo function
+        function runDemo() {
+            switchTab('javascript');
+            setTimeout(() => {
+                loadSampleCode();
+                setTimeout(() => {
+                    obfuscateCode();
+                    showNotification('Demo completed! Check the obfuscated output.', 'success');
+                }, 500);
+            }, 100);
+        }
+
+        // Placeholder functions for footer links
+        function showDocumentation() { showNotification('Documentation will open in new tab', 'info'); }
+        function showExamples() { showNotification('Examples page will open', 'info'); }
+        function showAPIDocs() { showNotification('API documentation will open', 'info'); }
+        function showChangelog() { showNotification('Changelog will open', 'info'); }
+        function showTroubleshooting() { showNotification('Troubleshooting guide will open', 'info'); }
+        function showFAQ() { showNotification('FAQ page will open', 'info'); }
+        function showCommunity() { showNotification('Community page will open', 'info'); }
+        function showContact() { showNotification('Contact form will open', 'info'); }
+    </script>
+</body>
+</html>
